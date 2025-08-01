@@ -12,21 +12,47 @@ struct ToDoItemRow: View {
     
     var body: some View {
         HStack(spacing: 15) {
-            Image("Critical")
+            priorityIcon()
                 .resizable()
                 .scaledToFit()
                 .frame(width: 150, height: 150)
         }
-        VStack(alignment: .leading) {
-            Text(toDo.title)
-                .bold(toDo.isOverdue)
-                .font(.headline)
-            
-            Text("Deadline: \(toDo.deadline, formatter: dateFormatter)")
-            
-            Text(toDo.description)
-                .font(.caption)
-            
+            VStack(alignment: .leading) {
+                Text(toDo.title)
+                    .bold(toDo.isOverdue)
+                    .font(.headline)
+                
+                Text("Deadline: \(toDo.deadline, formatter: dateFormatter)")
+                
+                Text(toDo.description)
+                    .font(.caption)
+                
+            }
+            .padding()
+            // Apply red color to the entire row if overdue
+            .foregroundColor(toDo.isOverdue ? .red : .primary)
+    }
+        
+    // Helper function to determine the icon based on priority
+    private func priorityIcon() -> Image {
+        switch toDo.priority {
+        case .critical:
+            return Image("Critical")
+        case .important:
+            return Image("Important")
+        case .regular:
+            return Image("Regular")
+        }
+    }
+    
+    private func priorityColor() -> Color {
+        switch toDo.priority {
+        case .critical:
+            return .red
+        case .important:
+            return .orange
+        case .regular:
+            return .yellow
         }
     }
 }
@@ -39,5 +65,5 @@ private let dateFormatter: DateFormatter = {
 }()
 
 #Preview {
-    ToDoItemRow(toDo: ToDo.sampleData[0])
+    ToDoItemRow(toDo: ToDo.sampleData[2])
 }

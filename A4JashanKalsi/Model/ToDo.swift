@@ -6,3 +6,45 @@
 //
 
 import Foundation
+
+enum Priority: String {
+    case critical
+    case important
+    case regular
+}
+
+struct ToDo: Identifiable{
+    var id: Int // A unique numeric identifier
+    var title: String // A meaningful title of the task
+    var priority: Priority // The task's priority
+    var deadline: Date // The date and time the task is due
+    var description: String // A detailed description of the task
+    
+    // A computed property to check if the deadline has passed
+    var isOverdue: Bool {
+        return deadline < Date()
+    }
+    
+    // Static list of hardcoded data for the app
+    static var sampleData: [ToDo] = [
+        // Create specific dates using DateComponents
+        ToDo(id: 1, title: "Buy milk", priority: .critical, deadline: createDate(year: 2025, month: 8, day: 2, hour: 9, minute: 41), description: "Remember to buy milk"),
+        ToDo(id: 2, title: "Finish project", priority: .important, deadline: createDate(year: 2025, month: 8, day: 5, hour: 12, minute: 00), description: "Make sure to finish the project"),
+        ToDo(id: 3, title: "Call Bank", priority: .regular, deadline: createDate(year: 2025, month: 8, day: 2, hour: 9, minute: 30), description: "GIC details"),
+        ToDo(id: 4, title: "Assignment INFO47546", priority: .critical, deadline: createDate(year: 2025, month: 7, day: 30, hour: 11, minute: 59), description: "Assignment 02 completion"),
+        ]
+}
+
+// Helper function to create dates easily
+// This is a common approach to handle specific date creation.
+func createDate(year: Int, month: Int, day: Int, hour: Int = 0, minute: Int = 0) -> Date {
+    var components = DateComponents()
+    components.year = year
+    components.month = month
+    components.day = day
+    components.hour = hour
+    components.minute = minute
+    
+    let calendar = Calendar.current
+    return calendar.date(from: components) ?? Date()
+}

@@ -15,13 +15,18 @@ struct ToDoListView: View {
         NavigationView {
             List(tasks) { task in
                 // Each item in the list is a link to the detail view
-                NavigationLink(destination: ToDoItemRow(ToDo: ToDo)) {
-                    ToDoItemRow(ToDo: ToDo)
+                NavigationLink(destination: ToDoItemView(toDo: task)) {
+                    ToDoItemRow(toDo: task)
                 }
-                Text(task.title)
             }
-            .navigationBarTitle("To-Do List")
+            .navigationTitle("To-Do List")
         }
+    }
+}
+
+struct ToDoListView_Previews: PreviewProvider {
+    static var previews: some View {
+        ToDoListView()
     }
 }
 

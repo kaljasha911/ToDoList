@@ -28,10 +28,11 @@ struct ToDo: Identifiable{
     // Static list of hardcoded data for the app
     static var sampleData: [ToDo] = [
         // Create specific dates using DateComponents
-        ToDo(id: 0, title: "Buy milk", priority: .critical, deadline: createDate(year: 2025, month: 8, day: 12, hour: 11, minute: 55), description: "Remember to buy milk"),
-        ToDo(id: 1, title: "Finish the project", priority: .important, deadline: createDate(year: 2025, month: 8, day: 24, hour: 12, minute: 00), description: "Make sure to finish the project"),
+        ToDo(id: 0, title: "Buy milk, groceries!", priority: .critical, deadline: createDate(year: 2025, month: 8, day: 12, hour: 11, minute: 55), description: "Remember to buy milk, WHEY Protein, and eggs from the grocery store"),
+        ToDo(id: 1, title: "Finish the project", priority: .important, deadline: createDate(year: 2025, month: 8, day: 24, hour: 12, minute: 00), description: "Make sure to finish the Cyber Security project, not a group project! Make sure to submit it by the end of the day"),
         ToDo(id: 2, title: "Call Bank", priority: .regular, deadline: createDate(year: 2025, month: 8, day: 11, hour: 9, minute: 30), description: "GIC details"),
-        ToDo(id: 3, title: "Assignment INFO47546", priority: .critical, deadline: createDate(year: 2025, month: 7, day: 30, hour: 11, minute: 59), description: "Assignment 02 completion"),
+        ToDo(id: 3, title: "Assignment INFO47546", priority: .critical, deadline: createDate(year: 2025, month: 7, day: 30, hour: 11, minute: 59), description: "Assignment 02 completion, all four questions must be answered. No late submissions"),
+        ToDo(id: 4, title: "Final Test", priority: .important, deadline: createDate(year: 2025, month: 8, day: 10, hour: 11, minute: 59), description: "Prepare for final test, aim for 90%. In person test at Sheridan Trafalgar campus."),
         ]
 }
 

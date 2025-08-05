@@ -11,18 +11,21 @@ struct ToDoItemView: View {
     let toDo: ToDo
     
     var body: some View {
-        HStack(spacing: 15) {
+        VStack(alignment: .center, spacing: 15) {
             priorityIcon()
                 .resizable()
                 .scaledToFit()
-                .frame(width: 60, height: 60)
-        }
-        VStack(alignment: .leading) {
+                .frame(width: 80, height: 80)
+            
             Text(toDo.title)
                 .bold(toDo.isOverdue)
                 .font(.headline)
-          
+            
             Text("Due by \(toDo.deadline, formatter: dateFormatter)")
+            
+        }
+        
+        VStack(alignment: .leading) {
             
             HStack {
                 Text("Priority:")
@@ -99,5 +102,5 @@ private let dateFormatter: DateFormatter = {
 }()
 
 #Preview {
-    ToDoItemView(toDo: ToDo.sampleData[4])
+    ToDoItemView(toDo: ToDo.sampleData[3])
 }

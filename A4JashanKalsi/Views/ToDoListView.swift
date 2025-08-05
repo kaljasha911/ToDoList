@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ToDoListView: View {
+    
     // Access the static list of tasks from the ToDo model
     let tasks: [ToDo] = ToDo.sampleData
     
@@ -27,5 +28,6 @@ struct ToDoListView: View {
 struct ToDoListView_Previews: PreviewProvider {
     static var previews: some View {
         ToDoListView()
+            .preferredColorScheme(.dark)
     }
 }

@@ -10,6 +10,8 @@ import SwiftUI
 struct ToDoItemView: View {
     let toDo: ToDo
     
+    @Environment(\.colorScheme) var colorScheme
+    
     var body: some View {
         VStack(alignment: .center, spacing: 15) {
             priorityIcon()
@@ -19,9 +21,10 @@ struct ToDoItemView: View {
             
             Text(toDo.title)
                 .bold(toDo.isOverdue)
-                .font(.headline)
-            
+                .foregroundColor(toDo.isOverdue ? overdueColor : .primary)
             Text("Due by \(toDo.deadline, formatter: dateFormatter)")
+                .bold(toDo.isOverdue)
+                .foregroundColor(toDo.isOverdue ? overdueColor : .primary)
             
         }
         
@@ -32,7 +35,7 @@ struct ToDoItemView: View {
                 Text(toDo.priority.rawValue)
                     .bold()
                     .padding(5)
-                    .background(priorityColor().opacity(0.2))
+                    .background(priorityColor().opacity(0.3))
                     .cornerRadius(5)
             }
             
@@ -45,7 +48,8 @@ struct ToDoItemView: View {
                 .font(.headline)
                 .padding()
                 .frame(maxWidth: .infinity)
-                .background(toDo.isOverdue ? Color.red.opacity(0.2) : Color.green.opacity(0.2))
+                .background(toDo.isOverdue ? overdueColor.opacity(0.3) : upcomingColor.opacity(0.3))
+                .bold()
                 .cornerRadius(10)
         }
         .padding()
@@ -54,16 +58,16 @@ struct ToDoItemView: View {
     }
     
     private func timeDifferenceString() -> String {
-            let now = Date()
-            let components = Calendar.current.dateComponents([.day, .hour], from: min(now, toDo.deadline), to: max(now, toDo.deadline))
+        let now = Date()
+        let components = Calendar.current.dateComponents([.day, .hour], from: min(now, toDo.deadline), to: max(now, toDo.deadline))
             
-            let days = components.day ?? 0
-            let hours = components.hour ?? 0
-            
+        let days = components.day ?? 0
+        let hours = components.hour ?? 0
             if toDo.isOverdue {
                 // Format for an overdue task [cite: 40]
                 return "Already late by: \(days) days \(hours) hours"
-            } else {
+            }
+            else {
                 // Format for an upcoming task [cite: 39]
                 return "Remaining time: \(days) days \(hours) hours"
             }
@@ -80,15 +84,28 @@ struct ToDoItemView: View {
         }
     }
     
+    var overdueColor: Color {
+        colorScheme == .dark ? Color(red: 1.0, green: 0.5, blue: 0.5) : .red
+    }
+    var upcomingColor: Color {
+        colorScheme == .dark ? Color(red: 0.5, green: 1.0, blue: 0.5) : .green
+    }
+    var criticalColor: Color {
+        colorScheme == .dark ? Color(red: 1.0, green: 0.5, blue: 0.5) : .red
+    }
+    var importantColor: Color {
+        colorScheme == .dark ? Color(red: 1.0, green: 0.7, blue: 0.5) : .orange
+    }
+    var regularColor: Color {
+        colorScheme == .dark ? Color(red: 0.5, green: 0.7, blue: 1.0) : .blue
+    }
+    
     // Helper function for priority color
     private func priorityColor() -> Color {
         switch toDo.priority {
-        case .critical:
-            return .red
-        case .important:
-            return .orange
-        case .regular:
-            return .blue
+        case .critical: return criticalColor
+        case .important: return importantColor
+        case .regular: return regularColor
         }
     }
 }
@@ -103,4 +120,5 @@ private let dateFormatter: DateFormatter = {
 
 #Preview {
     ToDoItemView(toDo: ToDo.sampleData[3])
+        .preferredColorScheme(.dark)
 }

@@ -11,14 +11,18 @@ struct ToDoItemView: View {
     let toDo: ToDo
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
+        HStack(spacing: 15) {
+            priorityIcon()
+                .resizable()
+                .scaledToFit()
+                .frame(width: 60, height: 60)
+        }
+        VStack(alignment: .leading) {
             Text(toDo.title)
-                .font(.largeTitle)
-                .bold()
-            
-            Text("Due by \(toDo.deadline, formatter: fullDateFormatter)")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
+                .bold(toDo.isOverdue)
+                .font(.headline)
+          
+            Text("Due by \(toDo.deadline, formatter: dateFormatter)")
             
             HStack {
                 Text("Priority:")
@@ -33,8 +37,6 @@ struct ToDoItemView: View {
                 .bold()
             
             Text(toDo.description)
-            
-            Spacer()
             
             Text(timeDifferenceString())
                 .font(.headline)
@@ -64,6 +66,17 @@ struct ToDoItemView: View {
             }
     }
     
+    private func priorityIcon() -> Image {
+        switch toDo.priority {
+        case .critical:
+            return Image("Critical")
+        case .important:
+            return Image("Important")
+        case .regular:
+            return Image("Regular")
+        }
+    }
+    
     // Helper function for priority color
     private func priorityColor() -> Color {
         switch toDo.priority {
@@ -78,7 +91,7 @@ struct ToDoItemView: View {
 }
 
 // A more detailed date formatter for this view
-private let fullDateFormatter: DateFormatter = {
+private let dateFormatter: DateFormatter = {
     let formatter = DateFormatter()
     formatter.dateStyle = .long
     formatter.timeStyle = .short
@@ -86,5 +99,5 @@ private let fullDateFormatter: DateFormatter = {
 }()
 
 #Preview {
-    ToDoItemView(toDo: ToDo.sampleData[1])
+    ToDoItemView(toDo: ToDo.sampleData[4])
 }

@@ -19,7 +19,7 @@ struct ToDoListView: View {
                     ToDoItemRow(toDo: task)
                 }
             }
-            .navigationTitle("To-Do List")
+            .navigationTitle("To Do List")
         }
     }
 }
@@ -28,8 +28,4 @@ struct ToDoListView_Previews: PreviewProvider {
     static var previews: some View {
         ToDoListView()
     }
-}
-
-#Preview {
-    ToDoListView()
 }
